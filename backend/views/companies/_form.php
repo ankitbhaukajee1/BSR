@@ -33,7 +33,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'company_start_date')->widget(
         DatePicker::className(), [
             // inline too, not bad
-            'inline' => false,
+            'inline' => true,
             // modify template for custom rendering
             //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
             'clientOptions' => [
