@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $model=new \backend\models\Companies();
 
-    echo $this->render('/companies/create', ['model' => $model]);
+    echo $this->render('/companies/create', ['model' => $model,'branch'=>$branch,]);
     Modal::end();
 
     ?>

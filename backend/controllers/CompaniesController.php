@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Branches;
 use Yii;
 use backend\models\Companies;
 use backend\models\CompaniesSearch;
@@ -34,6 +35,7 @@ class CompaniesController extends Controller
     public function actionIndex()
     {
         $model = new Companies();
+        $branch=new Branches();
         $searchModel = new CompaniesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -41,6 +43,7 @@ class CompaniesController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model'=>$model,
+            'branch'=>$branch,
         ]);
     }
 
@@ -66,15 +69,18 @@ class CompaniesController extends Controller
         if(Yii::$app->user->can('create-company'))
         {
             $model = new Companies();
-
-            if ($model->load(Yii::$app->request->post())) {
+            $branch=new Branches();
+            if ($model->load(Yii::$app->request->post()) && $branch->load(Yii::$app->request->post())) {
                 $model->company_created_date = date('Y-m-d h:m:s');
-
                 $model->save();
+                $branch->company_id=$model->company_id;
+                $branch->branch_created_date=date('Y-m-d');
+                $branch->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'branch'=>$branch,
                 ]);
             }
         }

@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use backend\models\Companies;
 
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Branches */
 /* @var $form yii\widgets\ActiveForm */
