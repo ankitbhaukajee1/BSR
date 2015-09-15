@@ -53,7 +53,7 @@ $script=<<<JS
 		$.get('../location/get-city-province',{zip_id:zip_id},function(data)
 		{
             var data=$.parseJSON(data);
-            
+
 		    $('#customers-city').attr('value',data.city);
 		    $('#customers-province').attr('value',data.province);
 		});
