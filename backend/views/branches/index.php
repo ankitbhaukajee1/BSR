@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\models\Branches;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\BranchesSearch */
@@ -16,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Branches', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Create Branches',['class' => 'btn btn-success','id'=>'modalButton']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel
+        'filterModel' => $searchModel,
         
         'columns' => [
 
@@ -38,5 +40,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php
+    Modal::begin([
+        'header'=>'<h1>Branches</h1>',
+        'id'=>'modal',
+        'size'=>'modal-sm-1',
+    ]);
+
+    $model=new Branches();
+
+    echo $this->render('/branches/create', ['model' => $model]);
+    Modal::end();
+
+    ?>
 
 </div>

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap\Modal;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\CompaniesSearch */
@@ -16,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Companies', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Create Companies',['class' => 'btn btn-success','id'=>'modalButton']) ?>
     </p>
 
     <?= GridView::widget([
@@ -37,5 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php
+    Modal::begin([
+        'header'=>'<h1>Companies</h1>',
+        'id'=>'modal',
+        'size'=>'modal-sm-1',
+    ]);
+
+    $model=new \backend\models\Companies();
+
+    echo $this->render('/companies/create', ['model' => $model]);
+    Modal::end();
+
+    ?>
 
 </div>

@@ -3,17 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Companies;
-use backend\models\CompaniesSearch;
+use backend\models\Customers;
+use backend\models\CustomersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\ForbiddenHttpException;
 
 /**
- * CompaniesController implements the CRUD actions for Companies model.
+ * CustomersController implements the CRUD actions for Customers model.
  */
-class CompaniesController extends Controller
+class CustomersController extends Controller
 {
     public function behaviors()
     {
@@ -28,24 +27,22 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Lists all Companies models.
+     * Lists all Customers models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $model = new Companies();
-        $searchModel = new CompaniesSearch();
+        $searchModel = new CustomersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model'=>$model,
         ]);
     }
 
     /**
-     * Displays a single Companies model.
+     * Displays a single Customers model.
      * @param integer $id
      * @return mixed
      */
@@ -57,35 +54,25 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Creates a new Companies model.
+     * Creates a new Customers model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('create-company'))
-        {
-            $model = new Companies();
+        $model = new Customers();
 
-            if ($model->load(Yii::$app->request->post())) {
-                $model->company_created_date = date('Y-m-d h:m:s');
-
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->company_id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
-        }
-        else
-        {
-            throw new ForbiddenHttpException;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->customer_id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
     }
 
     /**
-     * Updates an existing Companies model.
+     * Updates an existing Customers model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +82,7 @@ class CompaniesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->company_id]);
+            return $this->redirect(['view', 'id' => $model->customer_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -104,7 +91,7 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Deletes an existing Companies model.
+     * Deletes an existing Customers model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,15 +104,15 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Finds the Companies model based on its primary key value.
+     * Finds the Customers model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Companies the loaded model
+     * @return Customers the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Companies::findOne($id)) !== null) {
+        if (($model = Customers::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
